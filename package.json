@@ -1,5 +1,5 @@
 {
-  "name": "flip-card",
+  "name": "Finger-counter",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,17 +13,21 @@
     "knex": "knex --knexfile ./server/db/knexfile.js"
   },
   "dependencies": {
+    "@teachablemachine/image": "^0.8.5",
+    "@tensorflow/tfjs": "^4.19.0",
     "express": "^4.19.2",
     "knex": "^3.1.0",
+    "ml5": "^0.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
+    "react-webcam": "^7.2.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.29.2",
     "@types/express": "^4.17.21",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/superagent": "^8.1.6",
