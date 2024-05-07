@@ -7,7 +7,11 @@ function App() {
   const modelURL = URL + "model.json";
   const metadataURL = URL + "metadata.json";
   const [model,setModel] = useState<tmImage.CustomMobileNet>()
-  const [prediction,setPrediction] = useState({one:0,two:0})
+  const [prediction,setPrediction] = useState({1:0,2:0})
+  const [number,setNumber] = useState('')
+  const frames = 40
+  const [sum,setSum] = useState([] as string[])
+  const [result,setResult] = useState(0)
   
   useEffect(()=>{
    async function setUpModel() {
@@ -15,6 +19,19 @@ function App() {
     }
     setUpModel().then((res)=>setModel(res))
   },[])
+
+  useEffect(()=>{
+    if(prediction[1]>0){
+      const value = Math.max(...Object.values(prediction))
+      for (const key in prediction) {
+         //@ts-expect-error possible null
+       if(prediction[key]==value){
+        setNumber(key)
+        setSum(prev => [...prev,key])
+       } 
+      }
+    }
+  },[prediction])
 
   const webcamRef = useRef(null)
 
@@ -38,14 +55,17 @@ function App() {
     arr.push(await model.predict(webcamRef.current))
     n++
     }
-    while(n<40)
+    while(n<frames)
     
     const final = arr.reduce((acc,cur)=>{
-      acc.one+=cur[0].probability
-      acc.two+=cur[1].probability
+      acc[1]+=cur[0].probability
+      acc[2]+=cur[1].probability
       return acc
-    },{one:0,two:0})
+    },{1:0,2:0})
     setPrediction(final)
+
+    console.log(sum.join(''))
+
 }
 
   return (
@@ -53,10 +73,13 @@ function App() {
     <div>App</div>
     <button onClick={setUpCam}>start</button>
     <video autoPlay  ref={webcamRef} width={200} height={200}/>
-    <p>one:{prediction.one/40}</p>
-    <p>two:{prediction.two/40}</p>
-   
-    
+    <p>one:{prediction[1]/frames}</p>
+    <p>two:{prediction[1]/frames}</p>
+    <p>{number}</p>
+    <button onClick={()=> setSum(prev => [...prev,'+'])}>+</button>
+    <button onClick={()=>setResult(eval(sum.join('')))}>final</button>
+    <p>{sum.join('')}</p>
+    <p>{result}</p>
     </>
   )
 }
