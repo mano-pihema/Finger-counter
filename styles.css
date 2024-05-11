@@ -1,0 +1,26 @@
+#overlay {
+  position: absolute;
+  top:12.5%;
+  left: 0;
+  width: 150px;
+  height: 150px;
+  border: 3px solid rgb(24, 206, 49);
+  border-radius: '100%';
+  animation: blink 1s infinite alternate;
+  z-index: 10
+}
+
+.video-container {
+  position: relative;
+  border: 3 solid black;
+  
+}
+
+@keyframes blink {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+  }
+}
