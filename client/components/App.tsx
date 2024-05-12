@@ -15,6 +15,8 @@ function App() {
   const [gStream, setGStream] = useState<MediaStream | null>(null)
   const [classes, setClasses] = useState([] as string[])
 
+  const operations = ['*', '+', '-', '/']
+
   useEffect(() => {
     async function setUpModel() {
       return await tmImage.load(modelURL, metadataURL)
@@ -126,7 +128,13 @@ function App() {
         ))}
       </span>
       <p>{number}</p>
-      <button onClick={() => setSum((prev) => [...prev, '+'])}>+</button>
+
+      {operations.map((sign) => (
+        <button key={sign} onClick={() => setSum((prev) => [...prev, sign])}>
+          {sign}
+        </button>
+      ))}
+
       <button onClick={equals}>final</button>
       <p>{sum.join('')}</p>
       <p>{result}</p>
